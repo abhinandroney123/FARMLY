@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FARMLY — Poultry Farm Management System</title>
+  
+  <!-- Favicon with FARMLY Heart Rooster -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23FAF7F2' stroke='%23C57E22' stroke-width='4'/><path d='M35 55 C35 40, 50 30, 65 45 C75 55, 60 75, 50 82 C40 75, 25 55, 35 55 Z' fill='%23D85C49'/><circle cx='60' cy='32' r='6' fill='%233F7E4B'/></svg>">
+
+  <!-- Google Fonts: DM Sans & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-container">
+
+  <!-- ======================================================================
+       SIDEBAR NAVIGATION — Large Logo & Dedicated Pages
+       ====================================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Big Prominent Logo Header -->
+    <div class="sidebar-header">
+      <a class="brand-link" href="#" id="brandLogoLink">
+        <img src="logo.jpg" alt="FARMLY Logo" class="brand-logo-img">
+        <div class="brand-text-wrap">
+          <span class="brand-name">FARMLY</span>
+          <span class="brand-tagline">Poultry Farm System</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Active Farm Badge -->
+    <div class="sidebar-farm-badge">
+      <small>MANAGED FARM</small>
+      <strong id="sideFarmName">FARMLY Poultry Farm</strong>
+    </div>
+
+    <div class="nav-section-title">Farm Pages</div>
+
+    <!-- Clean, Dedicated Pages (Single Farm) -->
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-page="dashboard" href="#dashboard">
+        <span class="nav-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" data-page="flock" href="#flock">
+        <span class="nav-icon">🐔</span>
+        <span>Flock & Birds</span>
+      </a>
+      <a class="nav-item" data-page="feed" href="#feed">
+        <span class="nav-icon">🌾</span>
+        <span>Feed & Silo</span>
+      </a>
+      <a class="nav-item" data-page="eggs" href="#eggs">
+        <span class="nav-icon">🥚</span>
+        <span>Egg Collection</span>
+      </a>
+      <a class="nav-item" data-page="health" href="#health">
+        <span class="nav-icon">💉</span>
+        <span>Vaccines & Care</span>
+      </a>
+      <a class="nav-item" data-page="finance" href="#finance">
+        <span class="nav-icon">💰</span>
+        <span>Sales & Money</span>
+      </a>
+      <a class="nav-item" data-page="records" href="#records">
+        <span class="nav-icon">▤</span>
+        <span>Activity Log</span>
+      </a>
+      <a class="nav-item" data-page="settings" href="#settings">
+        <span class="nav-icon">⚙️</span>
+        <span>Farm Settings</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Bottom Card -->
+    <div class="sidebar-footer">
+      <div class="sidebar-card">
+        <h4>🌱 Growing Together</h4>
+        <p>Simple tools for a healthier, more productive poultry farm.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       MAIN CONTENT WRAPPER
+       ====================================================================== -->
+  <div class="main-wrapper">
+
+    <!-- Top Sticky Header -->
+    <header class="top-header">
+      <div class="header-left">
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle Navigation">☰</button>
+        <div class="header-breadcrumbs">
+          <div class="header-meta">
+            <span>FARMLY Workspace</span>
+            <span class="dot">●</span>
+            <span id="headerBreadcrumb">Farm Dashboard</span>
+          </div>
+          <h1 id="headerTitle" class="header-title">Farm Overview</h1>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div id="serverSyncBadge" class="server-status-pill checking" title="FARMLY Backend Server Status">
+          <span class="status-dot"></span>
+          <span id="serverSyncText">Connecting...</span>
+        </div>
+        <span id="liveDate" class="live-date-pill">📅 Mon, Nov 9, 2026</span>
+        <button id="headerDownloadBtn" class="btn btn-outline" style="font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">📥 Download Data</button>
+        <button id="headerQuickAddBtn" class="btn btn-primary-red">＋ Quick Entry</button>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="content-body">
+
+      <!-- Urgent Alert Notification Container -->
+      <div id="urgentAlertBox"></div>
+
+      <!-- ================================================================
+           PAGE 1: DASHBOARD (Home Overview with Big Numbers & Pictures)
+           ================================================================ -->
+      <section id="page-dashboard" class="farm-page-section">
+        
+        <!-- Big Visual Hero Banner with Farm Picture -->
+        <div class="page-hero-banner">
+          <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=80" 
+               alt="Poultry Farm Pasture" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">🏡 POULTRY DASHBOARD</span>
+            <h2>Good day, Farm Family! 👋</h2>
+            <p>Welcome to your central poultry dashboard. Track daily egg collections, feed stock, flock health, and expenses with ease.</p>
+          </div>
+          <div class="hero-logo-showcase">
+            <img src="logo.jpg" alt="FARMLY Logo">
+          </div>
+        </div>
+
+        <!-- 4 Large Spacious Stat Tiles -->
+        <div class="stats-grid-spacious">
+          <div class="kpi-card-spacious">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Active Flock</span>
+              <span class="kpi-icon-large red">🐔</span>
+            </div>
+            <div class="kpi-val-large"><span id="dashBirds">500</span> <span class="kpi-unit-text">hens</span></div>
+            <div class="kpi-sub-text">
+              <span id="dashBirdsCap">Capacity: 600 birds</span>
+            </div>
+          </div>
+
+          <div class="kpi-card-spacious">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Feed in Silo</span>
+              <span class="kpi-icon-large blue">🌾</span>
+            </div>
+            <div class="kpi-val-large"><span id="dashFeed">250</span> <span class="kpi-unit-text">kg</span></div>
+            <div class="kpi-sub-text">
+              <span id="dashFeedDays">~5.5 days buffer</span>
+            </div>
+          </div>
+
+          <div class="kpi-card-spacious">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Today's Eggs</span>
+              <span class="kpi-icon-large amber">🥚</span>
+            </div>
+            <div class="kpi-val-large"><span id="dashEggs">320</span> <span class="kpi-unit-text">eggs</span></div>
+            <div class="kpi-sub-text">
+              <span id="dashLayingRate">64.0% laying rate</span>
+            </div>
+          </div>
+
+          <div class="kpi-card-spacious">
+            <div class="kpi-card-top">
+              <span class="kpi-label">Net Balance</span>
+              <span class="kpi-icon-large green">💵</span>
+            </div>
+            <div class="kpi-val-large"><span id="dashNetBalance">$0</span></div>
+            <div class="kpi-sub-text">
+              <span id="dashLossesToday">0 bird losses today</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Big Friendly Quick Action Buttons -->
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Quick Actions</h4>
+            <p>Select an action below to quickly update your daily farm records.</p>
+          </div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-primary-blue" id="dashBtnEgg">🥚 Collect Eggs</button>
+            <button class="btn btn-soft-blue" id="dashBtnFeed">🌾 Refill / Use Feed</button>
+            <button class="btn btn-primary-red" id="dashBtnFlock">🐔 Update Birds (Add / Loss)</button>
+            <button class="btn btn-outline" id="dashBtnDownload" style="font-weight: 700;">📥 Download Data</button>
+          </div>
+        </div>
+
+        <!-- Two Column Spacious Panels (Egg Chart & Feed Silo Gauge) -->
+        <div class="panels-grid-spacious">
+          <!-- 7-Day Egg Trend Chart -->
+          <div class="panel-card-spacious">
+            <div class="panel-head-spacious">
+              <div>
+                <small>DAILY PRODUCTION</small>
+                <h3>7-Day Laying Performance</h3>
+              </div>
+              <button class="btn btn-sm btn-soft-blue" id="dashEggAddBtn">＋ Add Today's Eggs</button>
+            </div>
+            <div class="chart-container-spacious">
+              <div class="chart-bars-wrap-spacious" id="dashEggChartBars">
+                <!-- Injected via JS -->
+              </div>
+              <div class="chart-days-row-spacious" id="dashEggChartDays">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+            <div style="margin-top: 18px; font-size: 13px; color: var(--text-muted); display:flex; justify-content:space-between;">
+              <span>🎯 Target: 70%+ laying rate</span>
+              <strong id="dashEgg7DayAvg" style="color:var(--text-main);">7-day avg: 315 eggs/day</strong>
+            </div>
+          </div>
+
+          <!-- Feed Silo & Storage Runway -->
+          <div class="panel-card-spacious">
+            <div class="panel-head-spacious">
+              <div>
+                <small>FEED SILO RUNWAY</small>
+                <h3>Storage & Daily Consumption</h3>
+              </div>
+              <button class="btn btn-sm btn-soft-blue" id="dashFeedManageBtn">＋ Manage Feed</button>
+            </div>
+            <div class="feed-silo-box">
+              <div class="feed-silo-display">
+                <div class="feed-silo-big-num"><span id="dashFeedGaugeVal">250</span> <small>kg</small></div>
+                <strong style="color:var(--text-main); font-size:14px;" id="dashFeedDaysText">~5.5 days remaining</strong>
+              </div>
+              <div class="progress-track" style="height: 12px;">
+                <div id="dashFeedProgressBar" class="progress-fill blue" style="width: 62%;"></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:12px; font-weight:700; color:var(--text-subtle);">
+                <span>0 kg (Empty)</span>
+                <span id="dashFeedTargetLabel">Target Capacity: 400 kg</span>
+              </div>
+            </div>
+            <div id="dashFeedAlertBox" class="urgent-banner success" style="margin-bottom: 0;">
+              <div class="banner-left">
+                <span class="banner-icon">✓</span>
+                <div class="banner-text">
+                  <h5 id="dashFeedAlertTitle">Feed Stock Healthy</h5>
+                  <p id="dashFeedAlertDesc">Current inventory will last comfortably for the upcoming week.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Farm Activity Stream -->
+        <div class="panel-card-spacious">
+          <div class="panel-head-spacious">
+            <div>
+              <small>FARM JOURNAL</small>
+              <h3>Recent Farm Activities</h3>
+            </div>
+            <button class="btn btn-sm btn-outline" id="dashViewAllRecordsBtn">View All Logs →</button>
+          </div>
+          <div class="records-stream-spacious" id="dashRecentLogs">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 2: FLOCK & BIRDS (Clean, Dedicated Flock Page)
+           ================================================================ -->
+      <section id="page-flock" class="farm-page-section" style="display: none;">
+        
+        <!-- Hero Banner with Poultry Photo -->
+        <div class="page-hero-banner">
+          <img src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200&q=80" 
+               alt="Flock in pasture" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">🐔 FLOCK MANAGEMENT</span>
+            <h2>Flock Populations & Health</h2>
+            <p>Track current bird counts, record new batch arrivals, and log any mortalities with primary causes.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid-spacious">
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Active Birds</span>
+            <div class="kpi-val-large"><span id="flockCurrentCount">500</span></div>
+            <span class="kpi-sub-text">Healthy hens in sheds</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Housing Capacity</span>
+            <div class="kpi-val-large"><span id="flockCapacityCount">600</span></div>
+            <span class="kpi-sub-text" id="flockOccupancyRate">83% full</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Total Losses</span>
+            <div class="kpi-val-large"><span id="flockLossCount">2</span> <span class="kpi-unit-text">birds</span></div>
+            <span class="kpi-sub-text" id="flockMortalitySub">0.40% lifetime mortality</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Bird Breed</span>
+            <div class="kpi-val-large" style="font-size: 26px;"><span id="flockBreedText">Lohmann Brown</span></div>
+            <span class="kpi-sub-text" id="flockAgeText">28 weeks old</span>
+          </div>
+        </div>
+
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Update Flock Count</h4>
+            <p>Log new birds received or record a loss.</p>
+          </div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-primary-blue" id="flockAddBirdsBtn">＋ Add Birds (New Batch)</button>
+            <button class="btn btn-primary-red" id="flockRecordLossBtn">－ Record Mortality / Loss</button>
+          </div>
+        </div>
+
+        <div class="panel-card-spacious">
+          <h3 style="margin-bottom: 18px;">Flock Additions & Losses Timeline</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Action</th>
+                  <th>Quantity</th>
+                  <th>Reason / Cause</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="flockHistoryTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 3: FEED & SILO (Dedicated Feed Page)
+           ================================================================ -->
+      <section id="page-feed" class="farm-page-section" style="display: none;">
+        
+        <!-- Hero Banner with Feed Photo -->
+        <div class="page-hero-banner">
+          <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=1200&q=80" 
+               alt="Feed grains" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">🌾 FEED INVENTORY</span>
+            <h2>Silo Storage & Daily Consumption</h2>
+            <p>Monitor grain silo balances, prevent feed shortages, and record feed deliveries or daily feeding amounts.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid-spacious">
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Available In Silo</span>
+            <div class="kpi-val-large"><span id="feedTabStock">250</span> <span class="kpi-unit-text">kg</span></div>
+            <span class="kpi-sub-text">Current inventory</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Daily Burn Rate</span>
+            <div class="kpi-val-large"><span id="feedTabDaily">45</span> <span class="kpi-unit-text">kg/day</span></div>
+            <span class="kpi-sub-text">~90g per bird / day</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Runway Forecast</span>
+            <div class="kpi-val-large"><span id="feedTabDays">5.5</span> <span class="kpi-unit-text">days</span></div>
+            <span class="kpi-sub-text">Days until empty</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Stock Status</span>
+            <div class="kpi-val-large" style="font-size: 26px;"><span id="feedTabStatusText" style="color:var(--green-primary);">Sufficient</span></div>
+            <span class="kpi-sub-text">Warning at 50 kg</span>
+          </div>
+        </div>
+
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Feed Operations</h4>
+            <p>Restock your silo with fresh feed or log today's consumption.</p>
+          </div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-primary-blue" id="feedPurchaseBtn">＋ Buy / Restock Feed</button>
+            <button class="btn btn-soft-red" id="feedUsageBtn">－ Log Daily Feeding</button>
+          </div>
+        </div>
+
+        <div class="panel-card-spacious">
+          <h3 style="margin-bottom: 18px;">Feed Transaction History</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Action</th>
+                  <th>Quantity (kg)</th>
+                  <th>Feed Formulation / Supplier</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="feedHistoryTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 4: EGG PRODUCTION (Dedicated Egg Page)
+           ================================================================ -->
+      <section id="page-eggs" class="farm-page-section" style="display: none;">
+        
+        <!-- Hero Banner with Fresh Eggs Photo -->
+        <div class="page-hero-banner">
+          <img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=1200&q=80" 
+               alt="Fresh eggs in basket" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">🥚 DAILY PRODUCTION</span>
+            <h2>Egg Yields & Quality Grading</h2>
+            <p>Record your morning and evening egg harvests, monitor laying percentages, and track broken vs Grade A table eggs.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid-spacious">
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Today's Total</span>
+            <div class="kpi-val-large"><span id="eggTabToday">320</span> <span class="kpi-unit-text">eggs</span></div>
+            <span class="kpi-sub-text">~10.6 standard trays</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Laying Rate</span>
+            <div class="kpi-val-large"><span id="eggTabRate">64.0%</span></div>
+            <span class="kpi-sub-text">Eggs per 100 hens</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Grade A (Good)</span>
+            <div class="kpi-val-large"><span id="eggTabGradeA">312</span> <span class="kpi-unit-text">eggs</span></div>
+            <span class="kpi-sub-text">Clean & marketable</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Cracked / Damaged</span>
+            <div class="kpi-val-large"><span id="eggTabDamaged">8</span> <span class="kpi-unit-text">eggs</span></div>
+            <span class="kpi-sub-text">2.5% loss rate</span>
+          </div>
+        </div>
+
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Daily Harvest Entry</h4>
+            <p>Add counts from your morning or afternoon collection rounds.</p>
+          </div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-primary-blue" id="eggLogCollectionBtn">＋ Record Egg Collection</button>
+          </div>
+        </div>
+
+        <div class="panel-card-spacious">
+          <h3 style="margin-bottom: 18px;">Daily Egg Production Log</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Total Eggs</th>
+                  <th>Grade A (Good)</th>
+                  <th>Damaged / Cracked</th>
+                  <th>Laying Rate (%)</th>
+                </tr>
+              </thead>
+              <tbody id="eggHistoryTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 5: VACCINES & HEALTH (Dedicated Health Page)
+           ================================================================ -->
+      <section id="page-health" class="farm-page-section" style="display: none;">
+        
+        <!-- Hero Banner with Poultry Care Photo -->
+        <div class="page-hero-banner">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" 
+               alt="Farm biosecurity" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">💉 BIOSECURITY & HEALTH</span>
+            <h2>Vaccination Calendar & Care</h2>
+            <p>Keep your flock healthy by scheduling essential vaccinations against Newcastle disease, Gumboro, and regular deworming.</p>
+          </div>
+        </div>
+
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Preventative Care Reminders</h4>
+            <p>Schedule a vaccine dose or medication protocol.</p>
+          </div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-primary-blue" id="healthScheduleVaccineBtn">＋ Schedule New Vaccine</button>
+          </div>
+        </div>
+
+        <div class="vaccines-grid" id="vaccinesGrid">
+          <!-- Injected via JS -->
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 6: SALES & MONEY (Dedicated Finance Page)
+           ================================================================ -->
+      <section id="page-finance" class="farm-page-section" style="display: none;">
+        
+        <!-- Hero Banner with Farm Produce Photo -->
+        <div class="page-hero-banner">
+          <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=1200&q=80" 
+               alt="Farm market" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">💰 FINANCIAL TRACKER</span>
+            <h2>Farm Sales & Expenses</h2>
+            <p>Easily track income from egg and bird sales alongside operational costs like feed, medicines, and electricity.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid-spacious">
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Total Revenue</span>
+            <div class="kpi-val-large"><span id="financeTotalIncome" style="color:var(--green-primary);">$0</span></div>
+            <span class="kpi-sub-text">Egg, bird & manure sales</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Total Expenses</span>
+            <div class="kpi-val-large"><span id="financeTotalExpense" style="color:var(--red-primary);">$0</span></div>
+            <span class="kpi-sub-text">Feed, medicines, supplies</span>
+          </div>
+          <div class="kpi-card-spacious">
+            <span class="kpi-label">Net Operating Margin</span>
+            <div class="kpi-val-large"><span id="financeNetMargin">$0</span></div>
+            <span class="kpi-sub-text">Current net cash flow</span>
+          </div>
+        </div>
+
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Record Cash Flow</h4>
+            <p>Add a customer sale or record an expense receipt.</p>
+          </div>
+          <div class="quick-action-buttons">
+            <button class="btn btn-primary-blue" id="financeAddIncomeBtn">＋ Log Sales Income</button>
+            <button class="btn btn-soft-red" id="financeAddExpenseBtn">＋ Log Farm Expense</button>
+          </div>
+        </div>
+
+        <div class="panel-card-spacious">
+          <h3 style="margin-bottom: 18px;">Financial Transaction Ledger</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Category</th>
+                  <th>Amount ($)</th>
+                  <th>Notes / Invoice</th>
+                </tr>
+              </thead>
+              <tbody id="financeLedgerTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 7: ACTIVITY LOG (Dedicated Records Page)
+           ================================================================ -->
+      <section id="page-records" class="farm-page-section" style="display: none;">
+        
+        <div class="page-hero-banner" style="min-height: 170px;">
+          <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=80" 
+               alt="Farm records" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">▤ ACTIVITY LOG</span>
+            <h2>Farm History & Notes</h2>
+            <p>A full chronological audit trail of all egg collections, feed refills, bird counts, and general notes.</p>
+          </div>
+        </div>
+
+        <div class="quick-action-strip">
+          <div class="quick-action-title">
+            <h4>Filter & Search Activities</h4>
+            <p>Search by keyword or filter by category.</p>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="recordSearchInput" placeholder="🔍 Search logs..." class="form-input" style="width: 220px;">
+            <select id="recordTypeFilter" class="form-select" style="width: 140px;">
+              <option value="all">All Types</option>
+              <option value="egg">Eggs</option>
+              <option value="feed">Feed</option>
+              <option value="flock">Flock</option>
+              <option value="health">Health</option>
+              <option value="finance">Finance</option>
+              <option value="note">Notes</option>
+            </select>
+            <button class="btn btn-primary-blue" id="journalAddNoteBtn">＋ Add Note</button>
+            <button class="btn btn-outline" id="exportFarmCsvBtn">⬇ Export CSV</button>
+          </div>
+        </div>
+
+        <div class="panel-card-spacious">
+          <div class="records-stream-spacious" id="fullFarmRecordsStream">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           PAGE 8: FARM SETTINGS (Dedicated Settings Page)
+           ================================================================ -->
+      <section id="page-settings" class="farm-page-section" style="display: none;">
+        
+        <div class="page-hero-banner" style="min-height: 170px;">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" 
+               alt="Settings" 
+               class="hero-bg-img"
+               onerror="this.style.display='none'">
+          <div class="hero-overlay-content">
+            <span class="hero-badge-tag">⚙️ FARM SETTINGS</span>
+            <h2>Configuration & Backup</h2>
+            <p>Update your farm name, capacity limits, bird breeds, and safely download backups of your data.</p>
+          </div>
+        </div>
+
+        <div class="panels-grid-spacious">
+          <div class="panel-card-spacious">
+            <h3 style="margin-bottom: 20px;">Edit Farm Profile</h3>
+            <form id="formFarmSettings" style="display: flex; flex-direction: column; gap: 18px;">
+              <div class="form-group">
+                <label>Farm Name</label>
+                <input type="text" id="setFarmName" class="form-input" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Farm Manager / Owner</label>
+                  <input type="text" id="setFarmManager" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label>Location / Address</label>
+                  <input type="text" id="setFarmLocation" class="form-input" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Bird Breed</label>
+                  <input type="text" id="setFarmBreed" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label>Batch Age (Weeks)</label>
+                  <input type="number" id="setFarmAge" class="form-input" min="1" step="1" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Housing Capacity Limit</label>
+                  <input type="number" id="setFarmCapacity" class="form-input" min="1" step="1" required>
+                </div>
+                <div class="form-group">
+                  <label>Daily Feed Burn Rate (kg/day)</label>
+                  <input type="number" id="setFarmFeedRate" class="form-input" min="1" step="0.5" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary-blue" style="align-self: flex-start;">Save Farm Settings</button>
+            </form>
+          </div>
+
+          <div class="panel-card-spacious">
+            <h3 style="margin-bottom: 20px;">Backup & Data Protection</h3>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <div style="background: var(--bg-cream-soft); padding: 22px; border-radius: var(--radius-md); border: 1px solid var(--border-cream);">
+                <h4 style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">Backup to Your Computer</h4>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Download a complete JSON file of all your birds, feed, egg logs, and finances. You can restore it anytime.</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <button class="btn btn-sm btn-outline" id="btnDownloadJson">⬇ Download Backup File</button>
+                  <label class="btn btn-sm btn-outline" style="cursor: pointer; margin-bottom: 0;">
+                    ⬆ Restore from File <input type="file" id="inputRestoreJson" accept=".json" style="display: none;">
+                  </label>
+                  <button class="btn btn-sm btn-soft-cream" id="btnResetDemo">Reset Demo Data</button>
+                </div>
+              </div>
+
+              <div style="background: var(--blue-soft); padding: 22px; border-radius: var(--radius-md); border: 1px solid var(--blue-border);">
+                <h4 style="font-size: 16px; font-weight: 800; color: var(--blue-dark); margin-bottom: 8px;">Always Saved in Browser</h4>
+                <p style="font-size: 13px; color: var(--text-muted);">All entries are automatically saved in your browser's local storage immediately when entered. No internet connection needed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page Footer -->
+      <footer class="page-footer">
+        <div class="footer-brand">
+          <img src="logo.jpg" alt="FARMLY" class="footer-logo-thumb">
+          <strong>FARMLY · FARM FAMILY</strong>
+          <span>— Simple & Friendly Poultry Farm Management</span>
+        </div>
+        <div>
+          <span>Saved locally in your browser · Clean Cream & Pastel Interface</span>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<!-- ======================================================================
+     MODALS / DIALOG WINDOWS
+     ====================================================================== -->
+
+<!-- Modal: Download Entered Data -->
+<dialog id="modalDownloadData">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>EXPORT & DOWNLOAD</small>
+        <h3>Download Farm Records</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <div class="dialog-form" style="gap: 12px; padding: 22px 28px;">
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">
+        Click below to download your entered farm records as Excel-ready CSV spreadsheet files:
+      </p>
+
+      <!-- 1. Master Full Report -->
+      <button type="button" class="btn btn-primary-blue" id="dlFullReportBtn" style="padding: 14px 18px; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-md);">
+        <span>📊 Complete Farm Data (All Records in 1 Sheet)</span>
+        <small style="opacity: 0.9; font-weight: 700;">Excel / CSV</small>
+      </button>
+
+      <!-- 2. Egg Collections -->
+      <button type="button" class="btn btn-outline" id="dlEggHistoryBtn" style="padding: 12px 18px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-md);">
+        <span>🥚 Egg Collections (Daily Good & Damaged)</span>
+        <small style="color: var(--text-subtle);">CSV</small>
+      </button>
+
+      <!-- 3. Sales & Expenses -->
+      <button type="button" class="btn btn-outline" id="dlFinancesBtn" style="padding: 12px 18px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-md);">
+        <span>💰 Sales & Expense Transactions</span>
+        <small style="color: var(--text-subtle);">CSV</small>
+      </button>
+
+      <!-- 4. Flock Additions & Mortality -->
+      <button type="button" class="btn btn-outline" id="dlFlockHistoryBtn" style="padding: 12px 18px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-md);">
+        <span>🐔 Flock History (Additions & Losses)</span>
+        <small style="color: var(--text-subtle);">CSV</small>
+      </button>
+
+      <!-- 5. Feed Restocks & Consumption -->
+      <button type="button" class="btn btn-outline" id="dlFeedHistoryBtn" style="padding: 12px 18px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-md);">
+        <span>🌾 Feed Inventory & Consumption</span>
+        <small style="color: var(--text-subtle);">CSV</small>
+      </button>
+
+      <!-- 6. Activity Logbook -->
+      <button type="button" class="btn btn-outline" id="dlActivityLogBtn" style="padding: 12px 18px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-md);">
+        <span>▤ Activity Diary & Notes</span>
+        <small style="color: var(--text-subtle);">CSV</small>
+      </button>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn btn-outline" data-close>Close</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Modal: Quick Entry (Global) -->
+<dialog id="modalQuickEntry">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>QUICK ENTRY</small>
+        <h3>Record Farm Event</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formQuickEntry" class="dialog-form">
+      <div class="form-group">
+        <label>What do you want to record?</label>
+        <select id="qeCategorySelect" class="form-select">
+          <option value="egg">🥚 Daily Egg Collection</option>
+          <option value="feed">🌾 Feed Restock / Usage</option>
+          <option value="flock">🐔 Bird Update (Add / Mortality)</option>
+          <option value="health">💉 Vaccine or Medical Treatment</option>
+          <option value="finance">💰 Sales Income or Expense</option>
+          <option value="note">📝 General Farm Note</option>
+        </select>
+      </div>
+
+      <!-- Dynamic Sections -->
+      <div id="qeDynamicSection"></div>
+
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-red">Save Entry</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal: Flock Update -->
+<dialog id="modalFlockAction">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>FLOCK UPDATE</small>
+        <h3>Update Bird Population</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formFlockAction" class="dialog-form">
+      <div class="form-group">
+        <label>Action</label>
+        <select id="flockActionType" class="form-select">
+          <option value="add">＋ Add Birds (New Batch / Restock)</option>
+          <option value="loss">－ Record Bird Mortality / Loss</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Number of Birds</label>
+        <input type="number" id="flockActionAmount" class="form-input" min="1" step="1" placeholder="e.g. 10" required>
+      </div>
+      <div class="form-group" id="flockReasonGroup" style="display: none;">
+        <label>Primary Cause of Mortality</label>
+        <select id="flockReasonSelect" class="form-select">
+          <option value="Natural / Unknown">Natural / Unknown</option>
+          <option value="Heat Stress">Heat Stress / Climate</option>
+          <option value="Respiratory Disease">Respiratory Disease / Sickness</option>
+          <option value="Digestive Issue">Digestive / Feed Issue</option>
+          <option value="Predator Incident">Predator Incident</option>
+          <option value="Culling (Weak Bird)">Culling (Weak Bird)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Notes / Batch Details</label>
+        <input type="text" id="flockActionNote" class="form-input" placeholder="e.g. Arrived from hatchery / normal inspection">
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-blue">Save Flock Update</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal: Feed Management -->
+<dialog id="modalFeedAction">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>SILO STORAGE</small>
+        <h3>Manage Feed Stock</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formFeedAction" class="dialog-form">
+      <div class="form-group">
+        <label>Action</label>
+        <select id="feedActionType" class="form-select">
+          <option value="add">＋ Add Purchased Feed (Restock Silo)</option>
+          <option value="use">－ Record Feed Consumed</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Quantity (kg)</label>
+        <input type="number" id="feedActionAmount" class="form-input" min="0.5" step="0.5" placeholder="e.g. 50" required>
+      </div>
+      <div class="form-group">
+        <label>Feed Formulation</label>
+        <select id="feedActionFormula" class="form-select">
+          <option value="Layer Mash (16-18% Protein)">Layer Mash (16-18% Protein)</option>
+          <option value="Broiler Starter Pellets">Broiler Starter Pellets</option>
+          <option value="Broiler Finisher">Broiler Finisher</option>
+          <option value="Grower Feed">Grower Feed</option>
+          <option value="Organic Scratch & Grains">Organic Scratch & Grains</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cost / Invoice Notes (Optional)</label>
+        <input type="text" id="feedActionNote" class="form-input" placeholder="e.g. 3 bags from AG-Feed ($90)">
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-blue">Save Feed Update</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal: Egg Collection -->
+<dialog id="modalEggAction">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>EGG COLLECTION</small>
+        <h3>Log Daily Eggs</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formEggAction" class="dialog-form">
+      <div class="form-group">
+        <label>Good / Table Eggs (Grade A)</label>
+        <input type="number" id="eggActionGood" class="form-input" min="0" step="1" placeholder="e.g. 300" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cracked / Broken</label>
+          <input type="number" id="eggActionDamaged" class="form-input" min="0" step="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>Collection Slot</label>
+          <select id="eggActionSlot" class="form-select">
+            <option value="Morning">Morning Collection</option>
+            <option value="Afternoon">Afternoon Collection</option>
+            <option value="Evening">Evening Collection</option>
+            <option value="Full Day Combined">Full Day Combined</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes (Optional)</label>
+        <input type="text" id="eggActionNote" class="form-input" placeholder="e.g. Clean shells, nest boxes fresh">
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-blue">Save Egg Count</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal: Vaccine / Health Schedule -->
+<dialog id="modalHealthAction">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>POULTRY HEALTH</small>
+        <h3>Schedule Vaccine or Treatment</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formHealthAction" class="dialog-form">
+      <div class="form-group">
+        <label>Vaccine / Medicine Name</label>
+        <input type="text" id="healthActionName" class="form-input" placeholder="e.g. Newcastle Disease (ND Lasota)" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Scheduled Date</label>
+          <input type="date" id="healthActionDate" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label>Administration Method</label>
+          <select id="healthActionMethod" class="form-select">
+            <option value="Drinking Water">Drinking Water</option>
+            <option value="Eye Drop">Eye Drop</option>
+            <option value="Subcutaneous Injection">Subcutaneous Injection</option>
+            <option value="Spray">Spray</option>
+            <option value="Feed Mixing">Feed Mixing</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="healthActionStatus" class="form-select">
+          <option value="Upcoming">Upcoming (Scheduled)</option>
+          <option value="Completed">Completed Today</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Dosage & Veterinary Notes</label>
+        <textarea id="healthActionNotes" class="form-textarea" rows="2" placeholder="e.g. Dissolve in cool water with skim milk stabilizer"></textarea>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-blue">Save Schedule</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal: Financial Transaction -->
+<dialog id="modalFinanceAction">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>FARM CASHFLOW</small>
+        <h3>Record Income or Expense</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formFinanceAction" class="dialog-form">
+      <div class="form-group">
+        <label>Transaction Type</label>
+        <select id="financeActionType" class="form-select">
+          <option value="income">💵 Sales Revenue / Income</option>
+          <option value="expense">💳 Farm Expense / Cost</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="financeActionCategory" class="form-select">
+            <option value="Egg Sales">Egg Sales</option>
+            <option value="Live Bird Sales">Live Bird Sales</option>
+            <option value="Manure Sales">Manure Sales</option>
+            <option value="Feed Purchase">Feed Purchase</option>
+            <option value="Medicines & Vaccines">Medicines & Vaccines</option>
+            <option value="Bedding Material">Bedding Material</option>
+            <option value="Labor & Utilities">Labor & Utilities</option>
+            <option value="Equipment & Repairs">Equipment & Repairs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Amount ($)</label>
+          <input type="number" id="financeActionAmount" class="form-input" min="0.1" step="0.1" placeholder="e.g. 150.00" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes / Customer / Invoice Details</label>
+        <input type="text" id="financeActionNote" class="form-input" placeholder="e.g. Sold 20 crates to local shop">
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-blue">Save Transaction</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal: Journal Note -->
+<dialog id="modalNoteAction">
+  <div class="dialog-window">
+    <div class="dialog-header">
+      <div>
+        <small>FARM JOURNAL</small>
+        <h3>Add Farm Note</h3>
+      </div>
+      <button type="button" class="modal-close-btn" data-close>×</button>
+    </div>
+    <form id="formNoteAction" class="dialog-form">
+      <div class="form-group">
+        <label>Subject / Title</label>
+        <input type="text" id="noteActionTitle" class="form-input" placeholder="e.g. Cleaned water lines & drinker cups" required>
+      </div>
+      <div class="form-group">
+        <label>Observations & Notes</label>
+        <textarea id="noteActionDetails" class="form-textarea" rows="4" placeholder="Record temperatures, flock behavior, bedding condition, or general inspection remarks..."></textarea>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="btn btn-outline" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary-blue">Save Journal Note</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- JavaScript Application Logic -->
+<script src="script.js"></script>
+</body>
+</html>

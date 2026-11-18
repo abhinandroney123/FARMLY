@@ -1,0 +1,17 @@
+{
+  "name": "farmly-backend",
+  "version": "1.0.0",
+  "description": "FARMLY Poultry Farm Management System - Backend API & Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["poultry", "farm-management", "farmly", "express", "backend"],
+  "author": "FARMLY",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

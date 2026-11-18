@@ -1,0 +1,114 @@
+---
+# 1. Persistent Storage for Farm Data & Backups
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: farmly-data-pvc
+  labels:
+    app: farmly
+    app.kubernetes.io/part-of: farmly-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+# 2. OpenShift Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: farmly
+  labels:
+    app: farmly
+    app.kubernetes.io/name: farmly
+    app.kubernetes.io/part-of: farmly-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: farmly
+  template:
+    metadata:
+      labels:
+        app: farmly
+    spec:
+      containers:
+        - name: farmly
+          image: image-registry.openshift-image-registry.svc:5000/farmly/farmly:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8080"
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: farmly-storage
+              mountPath: /opt/app-root/src/data
+          readinessProbe:
+            httpGet:
+              path: /api/status
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/status
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: farmly-storage
+          persistentVolumeClaim:
+            claimName: farmly-data-pvc
+
+---
+# 3. OpenShift Cluster Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: farmly
+  labels:
+    app: farmly
+    app.kubernetes.io/name: farmly
+    app.kubernetes.io/part-of: farmly-app
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+      protocol: TCP
+  selector:
+    app: farmly
+
+---
+# 4. OpenShift Public Route (HTTPS)
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: farmly
+  labels:
+    app: farmly
+    app.kubernetes.io/name: farmly
+    app.kubernetes.io/part-of: farmly-app
+spec:
+  to:
+    kind: Service
+    name: farmly
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

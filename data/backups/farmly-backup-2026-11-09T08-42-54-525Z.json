@@ -1,0 +1,155 @@
+{
+  "name": "FARMLY Poultry Farm",
+  "manager": "Abhinand Roney",
+  "location": "Sector 3, Main Shed",
+  "breed": "Lohmann Brown",
+  "ageWeeks": 28,
+  "birds": 500,
+  "capacity": 600,
+  "feedStock": 250,
+  "dailyFeedRate": 45,
+  "eggsToday": 320,
+  "eggDate": "2026-11-09",
+  "totalLosses": 2,
+  "lossesToday": 0,
+  "vaccines": [
+    {
+      "id": "v1",
+      "name": "Newcastle Disease (ND Lasota)",
+      "target": "Newcastle Virus",
+      "date": "2026-11-14",
+      "method": "Drinking Water",
+      "status": "Upcoming",
+      "notes": "Administer in morning cool water"
+    },
+    {
+      "id": "v2",
+      "name": "IBD / Gumboro Booster",
+      "target": "Gumboro Disease",
+      "date": "2026-10-22",
+      "method": "Eye Drop",
+      "status": "Completed",
+      "notes": "Completed on schedule without issues"
+    },
+    {
+      "id": "v3",
+      "name": "Deworming (Piperazine)",
+      "target": "Roundworms",
+      "date": "2026-11-04",
+      "method": "Drinking Water",
+      "status": "Completed",
+      "notes": "All drinkers treated. Shed cleaned"
+    }
+  ],
+  "finances": [
+    {
+      "id": "f1",
+      "type": "income",
+      "category": "Egg Sales",
+      "amount": 240,
+      "date": "2026-11-08",
+      "note": "16 crates Grade A delivered to market"
+    },
+    {
+      "id": "f2",
+      "type": "expense",
+      "category": "Feed Purchase",
+      "amount": 135,
+      "date": "2026-11-05",
+      "note": "3 bags Layer Mash (50kg each)"
+    }
+  ],
+  "eggHistory": [
+    {
+      "date": "2026-11-03",
+      "count": 305,
+      "gradeA": 298,
+      "damaged": 7
+    },
+    {
+      "date": "2026-11-04",
+      "count": 310,
+      "gradeA": 302,
+      "damaged": 8
+    },
+    {
+      "date": "2026-11-05",
+      "count": 315,
+      "gradeA": 308,
+      "damaged": 7
+    },
+    {
+      "date": "2026-11-06",
+      "count": 322,
+      "gradeA": 314,
+      "damaged": 8
+    },
+    {
+      "date": "2026-11-07",
+      "count": 318,
+      "gradeA": 310,
+      "damaged": 8
+    },
+    {
+      "date": "2026-11-08",
+      "count": 325,
+      "gradeA": 318,
+      "damaged": 7
+    }
+  ],
+  "flockHistory": [
+    {
+      "date": "2026-11-08T08:15:00Z",
+      "action": "Mortality",
+      "qty": 1,
+      "reason": "Natural / Unknown",
+      "note": "Old cull bird found"
+    },
+    {
+      "date": "2026-10-15T09:00:00Z",
+      "action": "Flock Addition",
+      "qty": 100,
+      "reason": "Restock",
+      "note": "Point-of-lay pullets arrived"
+    }
+  ],
+  "feedHistory": [
+    {
+      "date": "2026-11-09T07:30:00Z",
+      "action": "Feed Used",
+      "qty": 45,
+      "formula": "Layer Mash",
+      "note": "Daily feeding"
+    },
+    {
+      "date": "2026-11-05T14:00:00Z",
+      "action": "Feed Added",
+      "qty": 150,
+      "formula": "Layer Mash",
+      "note": "Silo restock"
+    }
+  ],
+  "records": [
+    {
+      "id": "r1",
+      "title": "Morning egg collection complete",
+      "detail": "Gathered 320 eggs (312 Grade A). Clean shell quality.",
+      "type": "egg",
+      "time": "2026-11-09T08:30:00Z"
+    },
+    {
+      "id": "r2",
+      "title": "Feed silo refilled",
+      "detail": "Added 150 kg layer mash into silo feeders.",
+      "type": "feed",
+      "time": "2026-11-05T14:00:00Z"
+    },
+    {
+      "id": "r3",
+      "title": "Cleaned drinker lines & fresh water checked",
+      "detail": "Drinker cups flushed with clean water.",
+      "type": "note",
+      "time": "2026-11-04T10:00:00Z"
+    }
+  ]
+}
